@@ -1,4 +1,5 @@
--- Optimized query to retrieve all bookings with user, property, and payment details
+-- Initial query to retrieve all bookings with user, property, and payment details
+EXPLAIN
 SELECT
     b.booking_id,
     b.start_date,
@@ -31,4 +32,6 @@ LEFT JOIN
 ON
     b.booking_id = pay.booking_id
 WHERE
-    b.status = 'confirmed';
+    b.status = 'confirmed'
+    AND b.start_date >= '2024-01-01' -- Add filter condition using AND
+    AND b.end_date <= '2024-12-31';
