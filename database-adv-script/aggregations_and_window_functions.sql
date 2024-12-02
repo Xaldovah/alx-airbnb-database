@@ -1,4 +1,4 @@
--- Total number of bookings made by each user
+-- Query 1: Total number of bookings made by each user
 SELECT
     User.user_id,
     User.first_name,
@@ -15,7 +15,7 @@ GROUP BY
 ORDER BY
     total_bookings DESC;
 
--- Rank properties based on the total number of bookings using ROW_NUMBER()
+-- Query 2: Rank properties based on the total number of bookings using ROW_NUMBER
 SELECT
     Property.property_id,
     Property.name AS property_name,
@@ -32,5 +32,23 @@ ON
 GROUP BY
     Property.property_id, Property.name
 ORDER BY
-    rank;
+    row_number;
 
+-- Query 3: Rank properties based on the total number of bookings using RANK
+SELECT
+    Property.property_id,
+    Property.name AS property_name,
+    COUNT(Booking.booking_id) AS total_bookings,
+    RANK() OVER (
+        ORDER BY COUNT(Booking.booking_id) DESC
+    ) AS rank
+FROM
+    Property
+LEFT JOIN
+    Booking
+ON
+    Property.property_id = Booking.property_id
+GROUP BY
+    Property.property_id, Property.name
+ORDER BY
+    rank;
