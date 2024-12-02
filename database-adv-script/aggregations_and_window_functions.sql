@@ -32,5 +32,5 @@ ON
 GROUP BY
     Property.property_id, Property.name
 ORDER BY
-    row_number;
+    rank;
 
